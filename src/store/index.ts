@@ -66,6 +66,8 @@ export interface AdapterQQ {
   isReverse: boolean;
   reverseAddr: string;
   builtinMode: 'gocq' | 'lagrange' | 'lagrange-gocq';
+  signServerVer: string;
+  signServerName: string;
 }
 
 interface TalkLogItem {
@@ -88,6 +90,7 @@ export interface DiceConnection {
   cmdExecutedNum: number;
   cmdExecutedLastTime: number;
   onlineTotalTime: number;
+  isPublic: boolean;
 
   adapter: AdapterQQ;
 }
@@ -286,7 +289,7 @@ export const useStore = defineStore('main', {
         accessToken,
         useSignServer,
         signServerConfig,
-        signServerUrl,
+        signServerName,
         signServerVersion,
         reverseAddr,
         onlyQQGuild,
@@ -357,20 +360,12 @@ export const useStore = defineStore('main', {
           break;
         case 15:
           {
-            let version = '';
-            if (['sealdice', 'lagrange', 'newProxy'].includes(signServerUrl)) {
-              version = signServerVersion;
-            }
-            info = await postAddLagrange(account, signServerUrl, version, false);
+            info = await postAddLagrange(account, signServerName, signServerVersion, false);
           }
           break;
         case 16:
           {
-            let version = '';
-            if (['sealdice', 'lagrange', 'newProxy'].includes(signServerUrl)) {
-              version = signServerVersion;
-            }
-            info = await postAddLagrange(account, signServerUrl, version, true);
+            info = await postAddLagrange(account, signServerName, signServerVersion, true);
           }
           break;
       }
