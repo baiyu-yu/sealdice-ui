@@ -65,7 +65,7 @@ export type DiceConfig = {
   QQChannelAutoOn: boolean; // QQ频道是否自动开启
   QQChannelLogMessage: boolean; // QQ频道是否记录消息
   refuseGroupInvite: boolean; // 是否拒绝群组邀请
-  IgnoreGroupInvite: boolean; // 是否忽略群组邀请
+  ignoreGroupInvite: boolean; // 是否忽略群组邀请
   quitInactiveThreshold: number; // 退出不活跃状态的阈值
   quitInactiveBatchSize: number; // 每次退出不活跃的批量大小
   quitInactiveBatchWait: number; // 批量退出时的等待时间

@@ -602,7 +602,7 @@
     </el-form-item>
 
     <el-form-item label="忽略加群邀请">
-      <el-checkbox v-model="config.IgnoreGroupInvite" label="忽略加群邀请(仅在非强制拉入时起效)" />
+      <el-checkbox v-model="config.ignoreGroupInvite" label="忽略加群邀请(仅在非强制拉入时起效)" />
     </el-form-item>
 
     <el-form-item label="指令前缀">
