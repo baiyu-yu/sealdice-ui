@@ -35,7 +35,7 @@ export function postExec(message: string, messageType: 'private' | 'group') {
 }
 
 export function postUploadToUpgrade(files: Blob) {
-  return request('post', 'upload_to_upgrade', { files }, 'formdata');
+  return request('post', 'upload_to_upgrade', { files }, 'formdata', { timeout: 60000 });
 }
 
 export function getRecentMessage() {
@@ -74,6 +74,7 @@ export type DiceConfig = {
   maxCocCardGen: string; // 最大COC卡片生成数量
   extDefaultSettings: ExtensionSettings[]; // 扩展插件的默认设置
   botExtFreeSwitch: boolean; // 机器人扩展是否自由开关
+  botExitWithoutAt: boolean; // 是否在未被@时退出
   trustOnlyMode: boolean; // 是否启用信任模式
   aliveNoticeEnable: boolean; // 是否启用存活通知
   aliveNoticeValue: string; // 存活通知的值
