@@ -281,6 +281,9 @@ export const useStore = defineStore('main', {
         port,
         appID,
         appSecret,
+        useWebhook,
+        WebhookURL,
+        WebhookSecret,
         clientID,
         robotCode,
         implementation,
@@ -349,7 +352,15 @@ export const useStore = defineStore('main', {
           info = await postAddSlack(botToken, appToken);
           break;
         case 10:
-          info = await postAddOfficialQQ(Number(appID), appSecret, token, onlyQQGuild);
+          info = await postAddOfficialQQ(
+            Number(appID),
+            appSecret,
+            token,
+            onlyQQGuild,
+            useWebhook,
+            WebhookURL,
+            WebhookSecret,
+          );
           break;
         case 11:
           info = await postAddOnebot11ReverseWs(account, reverseAddr?.trim());

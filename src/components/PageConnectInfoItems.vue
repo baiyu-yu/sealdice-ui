@@ -1463,6 +1463,35 @@
           required>
           <el-switch v-model="form.onlyQQGuild" />
         </el-form-item>
+        <el-form-item
+          v-if="form.accountType === 10"
+          label="使用WebHook"
+          :label-width="formLabelWidth"
+          required>
+          <el-switch v-model="form.useWebhook" />
+        </el-form-item>
+        <el-form-item
+          v-if="form.accountType === 10"
+          label="WebHook地址"
+          :label-width="formLabelWidth"
+          required>
+          <el-input
+            v-model="form.WebhookURL"
+            placeholder="填写WebhookURL"
+            type="text"
+            autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item
+          v-if="form.accountType === 10"
+          label="WebHook密钥"
+          :label-width="formLabelWidth"
+          required>
+          <el-input
+            v-model="form.WebhookSecret"
+            placeholder="填写WebhookSecret"
+            type="text"
+            autocomplete="off"></el-input>
+        </el-form-item>
 
         <el-form-item v-if="form.accountType === 10" :label-width="formLabelWidth">
           <small>
@@ -2463,6 +2492,9 @@ const form = reactive({
   appID: undefined,
   appSecret: '',
   onlyQQGuild: true,
+  useWebhook: true,
+  WebhookURL: '',
+  WebhookSecret: '',
 
   useSignServer: false,
   signServerConfig: {

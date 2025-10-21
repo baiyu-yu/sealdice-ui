@@ -147,11 +147,14 @@ export function postAddOfficialQQ(
   appSecret: string,
   token: string,
   onlyQQGuild: boolean,
+  useWebhook: boolean,
+  WebhookURL: string,
+  WebhookSecret: string,
 ) {
   return request<DiceConnection>(
     'post',
     'addOfficialQQ',
-    { appID, appSecret, token, onlyQQGuild },
+    { appID, appSecret, token, onlyQQGuild, useWebhook, WebhookURL, WebhookSecret },
     'json',
     {
       timeout: 65000,
@@ -333,6 +336,9 @@ enum goCqHttpStateCode {
 //     appID: undefined,
 //     appSecret: string,
 //     onlyQQGuild: true,
+//     useWebhook: false,
+//     WebhookURL: string,
+//     WebhookSecret: string,
 
 //     useSignServer: false,
 //     signServerConfig: {
