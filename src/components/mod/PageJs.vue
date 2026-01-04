@@ -884,7 +884,7 @@ import {
   uploadJs,
   uploadJsResource,
 } from '~/api/js';
-import { UploadRawFile } from 'element-plus';
+import type { UploadRawFile } from 'element-plus';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

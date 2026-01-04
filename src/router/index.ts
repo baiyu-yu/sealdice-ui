@@ -5,6 +5,7 @@ import PageConnectInfoItems from '~/components/PageConnectInfoItems.vue';
 import PageCustomText from '~/components/PageCustomText.vue';
 import PageCustomReply from '~/components/mod/PageCustomReply.vue';
 import PageJs from '~/components/mod/PageJs.vue';
+import PageJsWebUI from '~/components/mod/PageJsWebUI.vue';
 import PageMiscDeck from '~/components/mod/PageMiscDeck.vue';
 import PageHelpDoc from '~/components/mod/PageHelpDoc.vue';
 import PageStory from '~/components/mod/PageStory.vue';
