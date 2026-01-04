@@ -45,6 +45,10 @@ export function uploadJs(file: UploadRawFile | Blob) {
   return request('post', 'upload', { file }, 'formdata');
 }
 
+export function uploadJsResource(file: UploadRawFile | Blob, name: string) {
+  return request('post', 'upload_resource', { file, name }, 'formdata');
+}
+
 export function deleteJs(filename: string) {
   return request('post', 'delete', { filename });
 }

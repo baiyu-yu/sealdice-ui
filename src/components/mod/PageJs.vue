@@ -120,32 +120,34 @@
               </template>
 
               <template #title-extra>
-                <el-button
-                  v-if="i.official && i.updateUrls && i.updateUrls.length > 0"
-                  :icon="Download"
-                  type="success"
-                  size="small"
-                  plain
-                  :loading="diffLoading">
-                  更新
-                </el-button>
-                <el-popconfirm
-                  v-else-if="i.updateUrls && i.updateUrls.length > 0"
-                  confirm-button-text="确认"
-                  cancel-button-text="取消"
-                  title="更新地址由插件作者提供，是否确认要检查该插件更新？"
-                  @confirm="doCheckUpdate(i)">
-                  <template #reference>
-                    <el-button
-                      :icon="Download"
-                      type="success"
-                      size="small"
-                      plain
-                      :loading="diffLoading">
-                      更新
-                    </el-button>
-                  </template>
-                </el-popconfirm>
+                <el-badge :hidden="!i.updateAvailable" value="new" class="item">
+                  <el-button
+                    v-if="i.official && i.updateUrls && i.updateUrls.length > 0"
+                    :icon="Download"
+                    type="success"
+                    size="small"
+                    plain
+                    :loading="diffLoading">
+                    更新
+                  </el-button>
+                  <el-popconfirm
+                    v-else-if="i.updateUrls && i.updateUrls.length > 0"
+                    confirm-button-text="确认"
+                    cancel-button-text="取消"
+                    title="更新地址由插件作者提供，是否确认要检查该插件更新？"
+                    @confirm="doCheckUpdate(i)">
+                    <template #reference>
+                      <el-button
+                        :icon="Download"
+                        type="success"
+                        size="small"
+                        plain
+                        :loading="diffLoading">
+                        更新
+                      </el-button>
+                    </template>
+                  </el-popconfirm>
+                </el-badge>
                 <!--                    <el-button :icon="Setting" type="primary" size="small" plain @click="showSettingDialog = true">设置</el-button>-->
                 <el-button
                   v-if="i.builtin && i.builtinUpdated"
@@ -655,6 +657,42 @@
                         </el-select>
                       </div>
                     </el-form-item>
+                    <el-form-item v-if="(c as unknown as JsPluginConfigItem).type == 'webui'">
+                      <el-form-item label="WebUI 配置项:">{{
+                        (c as unknown as JsPluginConfigItem).key
+                      }}</el-form-item
+                      ><br />
+                      <div style="width: 100%">
+                        <el-text>{{ (c as unknown as JsPluginConfigItem).description }}</el-text>
+                      </div>
+                      <div style="width: 100%; margin-bottom: 0.5rem">
+                        <el-space>
+                          <el-button
+                            type="primary"
+                            @click="
+                              router.push({
+                                path: '/mod/webui',
+                                query: { url: (c as unknown as JsPluginConfigItem).value },
+                              })
+                            "
+                            >打开配置页面</el-button
+                          >
+                          <el-upload
+                            action=""
+                            :show-file-list="false"
+                            accept=".zip"
+                            :before-upload="
+                              (file: UploadRawFile) =>
+                                beforeUploadResource(
+                                  file,
+                                  (config as unknown as JsPluginConfig)['pluginName'],
+                                )
+                            ">
+                            <el-button type="success" :icon="Upload">上传 UI 资源包</el-button>
+                          </el-upload>
+                        </el-space>
+                      </div>
+                    </el-form-item>
                     <el-form-item
                       v-if="(c as unknown as JsPluginConfigItem).type == 'task:cron'"
                       style="width: 100%; margin-bottom: 0.5rem">
@@ -844,6 +882,7 @@ import {
   shutDownJS,
   updateJs,
   uploadJs,
+  uploadJsResource,
 } from '~/api/js';
 import { UploadRawFile } from 'element-plus';
 import { useRouter } from 'vue-router';
@@ -1078,7 +1117,31 @@ onMounted(async () => {
     if (data.outputs) {
       jsLines.value.push(...data.outputs);
     }
-  }, 3000);
+    
+    // Check for updates
+    for (const js of jsList.value) {
+      if (js.updateUrls && js.updateUrls.length > 0 && !js.updateAvailable) {
+        try {
+          const checkResult = await checkJsUpdate(js.filename);
+          if (checkResult.result) {
+            js.updateAvailable = true;
+          }
+        } catch (e) {
+          console.error(`Failed to check update for ${js.name}:`, e);
+        }
+      }
+
+      // Check for WebUI updates
+      if (js.webUIUpdateURL && !js.webUIUpdateAvailable) {
+        // 这里需要实现检查 WebUI 更新的逻辑
+        // 简单起见，我们假设有一个 API checkJsWebUIUpdate
+        // 但目前我们没有，我们需要在后端实现或者在前端请求 webUIUpdateURL
+        // 考虑到 CORS，最好是后端代理请求，或者直接请求如果支持 CORS
+        
+        // 暂时先跳过，等待后端 API
+      }
+    }
+  }, 10000); // 增加间隔时间，避免过于频繁请求
 });
 
 onBeforeUnmount(() => {
@@ -1155,6 +1218,12 @@ const beforeUpload = async (file: UploadRawFile) => {
   refreshList();
   ElMessage.success('上传完成，请在全部操作完成后，手动重载插件');
   needReload.value = true;
+};
+
+const beforeUploadResource = async (file: UploadRawFile, name: string) => {
+  await uploadJsResource(file, name);
+  ElMessage.success('上传完成');
+  return false;
 };
 
 const doDelete = async (data: JsScriptInfo) => {

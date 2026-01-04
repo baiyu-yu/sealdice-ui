@@ -17,6 +17,9 @@ export interface JsScriptInfo {
   official: boolean;
   builtin: boolean;
   builtinUpdated: boolean;
+  updateAvailable?: boolean;
+  webUIUpdateURL?: string;
+  webUIUpdateAvailable?: boolean;
 }
 
 export interface JsPluginConfigItem {
