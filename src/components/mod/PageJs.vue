@@ -845,8 +845,10 @@ import {
   updateJs,
   uploadJs,
 } from '~/api/js';
-import type { UploadRawFile } from 'element-plus';
+import { UploadRawFile } from 'element-plus';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const jsEnable = ref(false);
 const editorBox = ref(null);
 const mode = ref('console');

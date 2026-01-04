@@ -28,6 +28,7 @@ const router = createRouter({
       path: '/mod',
       children: [
         { path: 'js', component: PageJs },
+        { path: 'webui', component: PageJsWebUI },
         { path: 'reply', component: PageCustomReply },
         { path: 'deck', component: PageMiscDeck },
         { path: 'helpdoc', component: PageHelpDoc },
