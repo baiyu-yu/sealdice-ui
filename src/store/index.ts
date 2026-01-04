@@ -293,6 +293,7 @@ export const useStore = defineStore('main', {
         signServerVersion,
         reverseAddr,
         onlyQQGuild,
+        useWebhook,
         platform,
         wsGateway,
         restGateway,
@@ -349,7 +350,7 @@ export const useStore = defineStore('main', {
           info = await postAddSlack(botToken, appToken);
           break;
         case 10:
-          info = await postAddOfficialQQ(Number(appID), appSecret, token, onlyQQGuild);
+          info = await postAddOfficialQQ(Number(appID), appSecret, token, onlyQQGuild, useWebhook);
           break;
         case 11:
           info = await postAddOnebot11ReverseWs(account, reverseAddr?.trim());

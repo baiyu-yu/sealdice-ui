@@ -1464,12 +1464,27 @@
           <el-switch v-model="form.onlyQQGuild" />
         </el-form-item>
 
+        <el-form-item
+          v-if="form.accountType === 10"
+          label="Webhook"
+          :label-width="formLabelWidth"
+          required>
+          <el-switch v-model="form.useWebhook" />
+        </el-form-item>
+
         <el-form-item v-if="form.accountType === 10" :label-width="formLabelWidth">
           <small>
             <div>提示：进入腾讯开放平台创建一个机器人</div>
             <div>https://q.qq.com/#/app/bot</div>
             <div>创建之后进入机器人管理后台，切换到「开发 - 开发设置」页</div>
             <div>把机器人的相关信息复制并粘贴进来</div>
+            <div v-if="form.useWebhook">
+              <div>您已开启 Webhook 模式，请在开放平台配置回调地址为：</div>
+              <div style="font-weight: bold; color: #409eff">
+                http(s)://您的公网地址:端口/sd-api/webhook/qq?id={{ form.appID || '您的AppID' }}
+              </div>
+              <div>请确保海豹服务端口（默认3211）可以被公网访问。</div>
+            </div>
           </small>
         </el-form-item>
 
@@ -2463,6 +2478,7 @@ const form = reactive({
   appID: undefined,
   appSecret: '',
   onlyQQGuild: true,
+  useWebhook: false,
 
   useSignServer: false,
   signServerConfig: {

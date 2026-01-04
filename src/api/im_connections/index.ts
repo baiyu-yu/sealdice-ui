@@ -147,11 +147,12 @@ export function postAddOfficialQQ(
   appSecret: string,
   token: string,
   onlyQQGuild: boolean,
+  useWebhook: boolean,
 ) {
   return request<DiceConnection>(
     'post',
     'addOfficialQQ',
-    { appID, appSecret, token, onlyQQGuild },
+    { appID, appSecret, token, onlyQQGuild, useWebhook },
     'json',
     {
       timeout: 65000,
