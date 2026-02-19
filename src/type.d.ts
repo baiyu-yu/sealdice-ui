@@ -17,6 +17,7 @@ export interface JsScriptInfo {
   official: boolean;
   builtin: boolean;
   builtinUpdated: boolean;
+  webUIPath?: string;
 }
 
 export interface JsPluginConfigItem {
@@ -32,6 +33,7 @@ export interface JsPluginConfigItem {
 export interface JsPluginConfig {
   pluginName: string;
   configs: JsPluginConfigItem[];
+  webUIPath?: string;
 }
 
 export interface HelpDocData {

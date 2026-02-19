@@ -64,7 +64,7 @@
               <el-upload
                 action=""
                 multiple
-                accept="application/javascript,application/typescript,.js,.ts"
+                accept="application/javascript,application/typescript,application/zip,.js,.ts,.zip"
                 class="upload"
                 :before-upload="beforeUpload"
                 :file-list="uploadFileList">
@@ -146,6 +146,17 @@
                     </el-button>
                   </template>
                 </el-popconfirm>
+                <el-button
+                  v-if="i.webUIPath"
+                  :icon="Link"
+                  type="primary"
+                  size="small"
+                  plain
+                  tag="a"
+                  target="_blank"
+                  :href="i.webUIPath">
+                  WebUI
+                </el-button>
                 <!--                    <el-button :icon="Setting" type="primary" size="small" plain @click="showSettingDialog = true">设置</el-button>-->
                 <el-button
                   v-if="i.builtin && i.builtinUpdated"
@@ -169,6 +180,17 @@
 
               <template #title-extra-error>
                 <el-space>
+                  <el-button
+                    v-if="i.webUIPath"
+                    :icon="Link"
+                    type="primary"
+                    size="small"
+                    plain
+                    tag="a"
+                    target="_blank"
+                    :href="i.webUIPath">
+                    WebUI
+                  </el-button>
                   <el-button
                     v-if="i.builtin && i.builtinUpdated"
                     :icon="Delete"
@@ -200,6 +222,11 @@
                 <el-descriptions-item v-if="!i.official" :span="3" label="主页">{{
                   i.homepage || '&lt;暂无>'
                 }}</el-descriptions-item>
+                <el-descriptions-item v-if="i.webUIPath" :span="3" label="WebUI">
+                  <el-link :href="i.webUIPath" target="_blank" type="primary">
+                    {{ i.webUIPath }}
+                  </el-link>
+                </el-descriptions-item>
                 <el-descriptions-item label="许可协议">{{
                   i.license || '&lt;暂无>'
                 }}</el-descriptions-item>
@@ -249,6 +276,17 @@
                       }}</el-text>
                     </el-space>
                     <el-space>
+                      <el-button
+                        v-if="(config as unknown as JsPluginConfig)['webUIPath']"
+                        :icon="Link"
+                        type="primary"
+                        size="small"
+                        plain
+                        tag="a"
+                        target="_blank"
+                        :href="(config as unknown as JsPluginConfig)['webUIPath']">
+                        WebUI
+                      </el-button>
                       <template
                         v-if="getDeprecatedKeys(config as unknown as JsPluginConfig).length > 0">
                         <el-tooltip
@@ -1101,11 +1139,6 @@ const filteredJsList = computed(() =>
 );
 const jsConfig = ref<{ [key: string]: JsPluginConfig }>({});
 const uploadFileList = ref<any[]>([]);
-
-// const jsVisitDir = async () => {
-// 好像 webui 上没啥效果，先算了
-// await store.jsVisitDir();
-// };
 
 const jsStatus = async () => {
   const res = await getJsStatus();
