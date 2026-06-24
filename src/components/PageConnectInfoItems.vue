@@ -1518,7 +1518,7 @@
           required>
           <el-input
             v-model="form.webhookPath"
-            placeholder="例如 /webhook/qq"
+            placeholder="例如 /webhook"
             type="text"
             autocomplete="off"></el-input>
         </el-form-item>
@@ -1533,17 +1533,6 @@
             :max="65535"
             placeholder="例如 8099"
             autocomplete="off"></el-input-number>
-        </el-form-item>
-        <el-form-item
-          v-if="form.accountType === ImConnectionTypeOfficialQQ && form.useWebhook"
-          label="校验密钥"
-          :label-width="formLabelWidth">
-          <el-input
-            v-model="form.webhookSecret"
-            placeholder="Webhook密钥（可选，不设置请留空）"
-            type="password"
-            show-password
-            autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item
@@ -2656,10 +2645,10 @@ const form = reactive({
 
   appID: undefined,
   appSecret: '',
-  onlyQQGuild: true,
+  onlyQQGuild: false,
 
   useWebhook: false,
-  webhookPath: '/webhook/qq',
+  webhookPath: '/webhook',
   webhookPort: 8099,
   webhookSecret: '',
 
