@@ -283,7 +283,7 @@
 
           <template v-if="i.platform === 'QQ' && i.protocolType === 'official'">
             <el-form-item label="协议">
-              <div>官方 QQ Bot</div>
+              <div>[WIP] 官方 QQ Bot</div>
             </el-form-item>
             <el-form-item label="AppID">
               <div>{{ i.adapter?.appID }}</div>
@@ -2643,14 +2643,13 @@ const form = reactive({
   host: '',
   port: '',
 
-  appID: undefined,
+  appID: '' as string | number,
   appSecret: '',
   onlyQQGuild: false,
 
   useWebhook: false,
   webhookPath: '/webhook',
   webhookPort: 8099,
-  webhookSecret: '',
 
   useSignServer: false,
   signServerConfig: {

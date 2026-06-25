@@ -88,7 +88,7 @@ export interface AdapterQQ {
   redVersion: string;
   host: string;
   port: number;
-  appID: number;
+  appID: string | number;
   isReverse: boolean;
   reverseAddr: string;
   builtinMode: 'gocq' | 'lagrange' | 'lagrange-gocq';
@@ -98,7 +98,6 @@ export interface AdapterQQ {
   useWebhook?: boolean;
   webhookPath?: string;
   webhookPort?: number;
-  webhookSecret?: string;
 }
 
 interface TalkLogItem {
@@ -330,7 +329,6 @@ export const useStore = defineStore('main', {
         useWebhook,
         webhookPath,
         webhookPort,
-        webhookSecret,
       } = form;
 
       let info = null;
@@ -387,14 +385,13 @@ export const useStore = defineStore('main', {
           break;
         case ImConnectionTypeOfficialQQ:
           info = await postAddOfficialQQ(
-            appID as any,
+            appID,
             appSecret,
             token,
             onlyQQGuild,
             useWebhook,
             webhookPath,
             webhookPort,
-            webhookSecret,
           );
           break;
         case ImConnectionTypeOnebotReverse:

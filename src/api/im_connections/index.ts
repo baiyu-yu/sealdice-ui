@@ -150,7 +150,6 @@ export function postAddOfficialQQ(
   useWebhook: boolean,
   webhookPath: string,
   webhookPort: number,
-  webhookSecret: string,
 ) {
   return request<DiceConnection>(
     'post',
@@ -163,7 +162,6 @@ export function postAddOfficialQQ(
       useWebhook,
       webhookPath,
       webhookPort,
-      webhookSecret,
     },
     'json',
     {
@@ -299,7 +297,7 @@ interface AdapterQQ {
   redVersion: string;
   host: string;
   port: number;
-  appID: number;
+  appID: string | number;
   isReverse: boolean;
   reverseAddr: string;
   builtinMode: 'gocq' | 'lagrange' | 'lagrange-gocq';
@@ -309,7 +307,6 @@ interface AdapterQQ {
   useWebhook?: boolean;
   webhookPath?: string;
   webhookPort?: number;
-  webhookSecret?: string;
 }
 enum goCqHttpStateCode {
   Init = 0,
